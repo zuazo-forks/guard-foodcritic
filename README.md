@@ -20,3 +20,10 @@ Install the gem:
 Add the guard-foodcritic definition to your Guardfile by running this command:
 
     $ guard init foodcritic
+
+## Options
+
+```ruby
+:all_on_start => false # Don't run Foodcritic on all cookbooks at startup
+                       # default: true
+```
