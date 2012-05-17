@@ -24,6 +24,9 @@ Add the guard-foodcritic definition to your Guardfile by running this command:
 ## Options
 
 ```ruby
-:all_on_start => false # Don't run Foodcritic on all cookbooks at startup
+:all_on_start => false # Whether to run Foodcritic on all cookbooks at startup
                        # default: true
+
+:cookbook_paths => "." # The path(s) to your cookbooks
+                       # default: ["cookbooks"]
 ```

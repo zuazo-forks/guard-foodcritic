@@ -9,6 +9,21 @@ module Guard
       it "[:all_on_start] defaults to true" do
         described_class.new.options[:all_on_start].should be_true
       end
+
+      it "[:cookbook_paths] defaults to ['cookbooks']" do
+        described_class.new.options[:cookbook_paths].should == ["cookbooks"]
+      end
+    end
+
+    describe "#run_all" do
+      it "runs the runner with the cookbook paths" do
+        guard = described_class.new([], :cookbook_paths => %w(cookbooks site-cookbooks))
+        runner = mock("runner")
+        guard.stub(:runner).and_return(runner)
+
+        runner.should_receive(:run).with(guard.options[:cookbook_paths])
+        guard.run_all
+      end
     end
 
     describe "#start" do

@@ -16,7 +16,7 @@ Gem::Specification.new do |gem|
   gem.version       = Guard::FOODCRITIC_VERSION
 
   gem.add_runtime_dependency "guard", "~> 1.0.0"
-  gem.add_runtime_dependency "foodcritic", "~> 1.0"
+  gem.add_runtime_dependency "foodcritic", "~> 1.2"
 
   gem.add_development_dependency "bundler", "~> 1.0"
   gem.add_development_dependency "rake", "~> 0.9.0"
