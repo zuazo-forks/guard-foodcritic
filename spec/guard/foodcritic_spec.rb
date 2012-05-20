@@ -26,6 +26,18 @@ module Guard
       end
     end
 
+    describe "#run_on_change" do
+      it "runs the runner with the changed paths" do
+        guard = described_class.new
+        runner = mock("runner")
+        guard.stub(:runner).and_return(runner)
+        paths = %w(recipes/default.rb attributes/default.rb)
+
+        runner.should_receive(:run).with(paths)
+        guard.run_on_change(paths)
+      end
+    end
+
     describe "#start" do
       it "runs all on start if the :all_on_start option is set to true" do
         guard = described_class.new([], :all_on_start => true)

@@ -19,5 +19,9 @@ module Guard
     def run_all
       runner.run @options[:cookbook_paths]
     end
+
+    def run_on_change(paths)
+      runner.run paths
+    end
   end
 end
