@@ -23,11 +23,17 @@ module Guard
     end
 
     def run_all
-      runner.run @options[:cookbook_paths]
+      run! @options[:cookbook_paths]
     end
 
     def run_on_change(paths)
-      runner.run paths
+      run! paths
+    end
+
+    private
+
+    def run!(paths)
+      runner.run(paths) or throw :task_has_failed
     end
   end
 end

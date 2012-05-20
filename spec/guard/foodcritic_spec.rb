@@ -16,25 +16,45 @@ module Guard
     end
 
     describe "#run_all" do
-      it "runs the runner with the cookbook paths" do
-        guard = described_class.new([], :cookbook_paths => %w(cookbooks site-cookbooks))
-        runner = mock("runner")
-        guard.stub(:runner).and_return(runner)
+      let(:guard) { described_class.new [], :cookbook_paths => %w(cookbooks site-cookbooks) }
+      let(:runner) { mock "runner" }
+      before { guard.stub(:runner).and_return(runner) }
 
-        runner.should_receive(:run).with(guard.options[:cookbook_paths])
+      it "runs the runner with the cookbook paths" do
+        runner.should_receive(:run).with(guard.options[:cookbook_paths]).and_return(true)
         guard.run_all
+      end
+
+      it "throws :task_has_failed if runner returns false" do
+        runner.stub(:run).and_return(false)
+        expect { guard.run_all }.to throw_symbol :task_has_failed
+      end
+
+      it "does not throw :task_has_failed if the runner returns true" do
+        runner.stub(:run).and_return(true)
+        expect { guard.run_all }.not_to throw_symbol :task_has_failed
       end
     end
 
     describe "#run_on_change" do
-      it "runs the runner with the changed paths" do
-        guard = described_class.new
-        runner = mock("runner")
-        guard.stub(:runner).and_return(runner)
-        paths = %w(recipes/default.rb attributes/default.rb)
+      let(:guard) { described_class.new }
+      let(:runner) { mock "runner" }
+      before { guard.stub(:runner).and_return(runner) }
 
-        runner.should_receive(:run).with(paths)
+      it "runs the runner with the changed paths" do
+        paths = %w(recipes/default.rb attributes/default.rb)
+        runner.should_receive(:run).with(paths).and_return(true)
         guard.run_on_change(paths)
+      end
+
+      it "throws :task_has_failed if runner returns false" do
+        runner.stub(:run).and_return(false)
+        expect { guard.run_on_change([]) }.to throw_symbol :task_has_failed
+      end
+
+      it "does not throw :task_has_failed if the runner returns true" do
+        runner.stub(:run).and_return(true)
+        expect { guard.run_on_change([]) }.not_to throw_symbol :task_has_failed
       end
     end
 
