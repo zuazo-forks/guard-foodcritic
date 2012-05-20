@@ -38,6 +38,23 @@ module Guard
       end
     end
 
+    describe "#runner" do
+      it "returns a Runner" do
+        described_class.new.runner.should be_a_kind_of Foodcritic::Runner
+      end
+
+      it "memoizes the runner" do
+        guard = described_class.new
+        guard.runner.should equal guard.runner
+      end
+
+      it "configured the runner with the guard options" do
+        guard = described_class.new
+        runner = guard.runner
+        runner.options.should == guard.options
+      end
+    end
+
     describe "#start" do
       it "runs all on start if the :all_on_start option is set to true" do
         guard = described_class.new([], :all_on_start => true)

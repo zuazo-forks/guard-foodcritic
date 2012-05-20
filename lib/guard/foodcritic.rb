@@ -3,6 +3,8 @@ require "guard/guard"
 
 module Guard
   class Foodcritic < Guard
+    autoload :Runner, "guard/foodcritic/runner"
+
     def initialize(watchers=[], options={})
       super
 
@@ -10,6 +12,10 @@ module Guard
         :all_on_start => true,
         :cookbook_paths => ["cookbooks"],
       }.merge(@options)
+    end
+
+    def runner
+      @runner ||= Runner.new(@options)
     end
 
     def start
