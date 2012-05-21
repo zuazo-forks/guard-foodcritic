@@ -3,6 +3,8 @@ require "guard/foodcritic"
 
 module Guard
   describe Foodcritic do
+    before { Notifier.stub(:notify) }
+
     it { should be_a_kind_of ::Guard::Guard }
 
     describe "#options" do
@@ -13,23 +15,64 @@ module Guard
       it "[:cookbook_paths] defaults to ['cookbooks']" do
         described_class.new.options[:cookbook_paths].should == ["cookbooks"]
       end
+
+      it "[:notification] defaults to true" do
+        described_class.new.options[:notification].should be_true
+      end
     end
 
     shared_examples "handles runner results" do
       context "the runner fails" do
         before { runner.stub(:run).and_return(false) }
         it { expect { subject }.to throw_symbol :task_has_failed }
+
+        context "notifications are enabled" do
+          let(:notification) { true }
+
+          it "notifies the user of the failure" do
+            Notifier.should_receive(:notify).with("Foodcritic failed", :image => :failed)
+            catch(:task_has_failed) { subject }
+          end
+        end
+
+        context "notifications are disabled" do
+          let(:notification) { false }
+
+          it "does not notify the user of the failure" do
+            Notifier.should_not_receive(:notify)
+            catch(:task_has_failed) { subject }
+          end
+        end
       end
 
       context "the runner succeeds" do
         before { runner.stub(:run).and_return(true) }
         it { expect { subject }.not_to throw_symbol :task_has_failed }
+
+        context "notifications are enabled" do
+          let(:notification) { true }
+
+          it "notifies the user of the success" do
+            Notifier.should_receive(:notify).with("Foodcritic passed", :image => :success)
+            subject
+          end
+        end
+
+        context "notifications are disabled" do
+          let(:notification) { false }
+
+          it "does not notify the user of the success" do
+            Notifier.should_not_receive(:notify)
+            subject
+          end
+        end
       end
     end
 
     describe "#run_all" do
       subject { guard.run_all }
-      let(:guard) { described_class.new [], :cookbook_paths => %w(cookbooks site-cookbooks) }
+      let(:guard) { described_class.new [], :cookbook_paths => %w(cookbooks site-cookbooks), :notification => notification }
+      let(:notification) { false }
       let(:runner) { mock "runner", :run => true }
       before { guard.stub(:runner).and_return(runner) }
 
@@ -48,7 +91,8 @@ module Guard
 
     describe "#run_on_change" do
       subject { guard.run_on_change(paths) }
-      let(:guard) { described_class.new }
+      let(:guard) { described_class.new([], :notification => notification) }
+      let(:notification) { false }
       let(:paths) { %w(recipes/default.rb attributes/default.rb) }
       let(:runner) { mock "runner", :run => true }
       before { guard.stub(:runner).and_return(runner) }

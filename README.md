@@ -32,4 +32,7 @@ Add the guard-foodcritic definition to your Guardfile by running this command:
 
 :cookbook_paths => "."    # The path(s) to your cookbooks
                           # default: ["cookbooks"]
+
+:notification => false    # Whether to display notifications after the lint is done running
+                          # default: true
 ```

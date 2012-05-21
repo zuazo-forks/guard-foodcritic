@@ -11,6 +11,7 @@ module Guard
       @options = {
         :all_on_start => true,
         :cookbook_paths => ["cookbooks"],
+        :notification => true,
       }.merge(@options)
     end
 
@@ -35,7 +36,12 @@ module Guard
     private
 
     def run!(paths)
-      runner.run(paths) or throw :task_has_failed
+      if runner.run(paths)
+        Notifier.notify "Foodcritic passed", :image => :success if @options[:notification]
+      else
+        Notifier.notify "Foodcritic failed", :image => :failed if @options[:notification]
+        throw :task_has_failed
+      end
     end
   end
 end
