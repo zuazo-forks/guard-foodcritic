@@ -15,57 +15,55 @@ module Guard
       end
     end
 
+    shared_examples "handles runner results" do
+      context "the runner fails" do
+        before { runner.stub(:run).and_return(false) }
+        it { expect { subject }.to throw_symbol :task_has_failed }
+      end
+
+      context "the runner succeeds" do
+        before { runner.stub(:run).and_return(true) }
+        it { expect { subject }.not_to throw_symbol :task_has_failed }
+      end
+    end
+
     describe "#run_all" do
+      subject { guard.run_all }
       let(:guard) { described_class.new [], :cookbook_paths => %w(cookbooks site-cookbooks) }
       let(:runner) { mock "runner", :run => true }
       before { guard.stub(:runner).and_return(runner) }
 
       it "runs the runner with the cookbook paths" do
         runner.should_receive(:run).with(guard.options[:cookbook_paths]).and_return(true)
-        guard.run_all
-      end
-
-      it "throws :task_has_failed if runner returns false" do
-        runner.stub(:run).and_return(false)
-        expect { guard.run_all }.to throw_symbol :task_has_failed
-      end
-
-      it "does not throw :task_has_failed if the runner returns true" do
-        runner.stub(:run).and_return(true)
-        expect { guard.run_all }.not_to throw_symbol :task_has_failed
+        subject
       end
 
       it "informs the user" do
         UI.should_receive(:info).with("Linting all cookbooks")
-        guard.run_all
+        subject
       end
+
+      include_examples "handles runner results"
     end
 
     describe "#run_on_change" do
+      subject { guard.run_on_change(paths) }
       let(:guard) { described_class.new }
+      let(:paths) { %w(recipes/default.rb attributes/default.rb) }
       let(:runner) { mock "runner", :run => true }
       before { guard.stub(:runner).and_return(runner) }
 
       it "runs the runner with the changed paths" do
-        paths = %w(recipes/default.rb attributes/default.rb)
         runner.should_receive(:run).with(paths).and_return(true)
-        guard.run_on_change(paths)
-      end
-
-      it "throws :task_has_failed if runner returns false" do
-        runner.stub(:run).and_return(false)
-        expect { guard.run_on_change([]) }.to throw_symbol :task_has_failed
-      end
-
-      it "does not throw :task_has_failed if the runner returns true" do
-        runner.stub(:run).and_return(true)
-        expect { guard.run_on_change([]) }.not_to throw_symbol :task_has_failed
+        subject
       end
 
       it "informs the user" do
         UI.should_receive(:info).with("Linting: recipes/default.rb attributes/default.rb")
-        guard.run_on_change(%w(recipes/default.rb attributes/default.rb))
+        subject
       end
+
+      include_examples "handles runner results"
     end
 
     describe "#runner" do
