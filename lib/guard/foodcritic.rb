@@ -28,12 +28,32 @@ module Guard
       run! @options[:cookbook_paths]
     end
 
+    def run_on_additions(paths)
+      run_paths paths
+    end
+
     def run_on_change(paths)
-      UI.info "Linting: #{paths.join(' ')}"
-      run! paths
+      run_paths paths
+    end
+
+    def run_on_modifications(paths)
+      run_paths paths
+    end
+
+    def respond_to?(method_name, include_private=false)
+      if %w(run_on_deletion run_on_change).include? method_name.to_s
+        false
+      else
+        super
+      end
     end
 
     private
+
+    def run_paths(paths)
+      UI.info "Linting: #{paths.join(' ')}"
+      run! paths
+    end
 
     def run!(paths)
       if runner.run(paths)

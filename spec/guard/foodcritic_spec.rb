@@ -89,8 +89,7 @@ module Guard
       include_examples "handles runner results"
     end
 
-    describe "#run_on_change" do
-      subject { guard.run_on_change(paths) }
+    shared_examples "lints specified cookbook files" do
       let(:guard) { described_class.new([], :notification => notification) }
       let(:notification) { false }
       let(:paths) { %w(recipes/default.rb attributes/default.rb) }
@@ -108,6 +107,21 @@ module Guard
       end
 
       include_examples "handles runner results"
+    end
+
+    describe "#run_on_additions" do
+      subject { guard.run_on_additions(paths) }
+      include_examples "lints specified cookbook files"
+    end
+
+    describe "#run_on_change" do
+      subject { guard.run_on_change(paths) }
+      include_examples "lints specified cookbook files"
+    end
+
+    describe "#run_on_modifications" do
+      subject { guard.run_on_modifications(paths) }
+      include_examples "lints specified cookbook files"
     end
 
     describe "#runner" do
@@ -139,6 +153,13 @@ module Guard
         guard.should_not_receive(:run_all)
         guard.start
       end
+    end
+
+    describe "#respond_to" do
+      it { should respond_to :run_on_additions }
+      it { should respond_to :run_on_modifications }
+      it { should_not respond_to :run_on_change }
+      it { should_not respond_to :run_on_deletion }
     end
   end
 end

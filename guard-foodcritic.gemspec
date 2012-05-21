@@ -15,7 +15,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Guard::FOODCRITIC_VERSION
 
-  gem.add_runtime_dependency "guard", "~> 1.0.0"
+  gem.add_runtime_dependency "guard", "~> 1.0"
   gem.add_runtime_dependency "foodcritic", "~> 1.3"
 
   gem.add_development_dependency "bundler", "~> 1.0"
