@@ -11,6 +11,10 @@ module Guard
         }.merge(options)
       end
 
+      def command(paths)
+        ["foodcritic", @options[:cli], paths].flatten(1).join(' ')
+      end
+
       def run(paths)
         system command(paths)
       end

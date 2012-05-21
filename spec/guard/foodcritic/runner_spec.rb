@@ -14,6 +14,24 @@ module Guard
       end
     end
 
+    describe "#command" do
+      let(:runner) { described_class.new }
+      let(:paths) { %w(recipes/default.rb attributes/default.rb) }
+      subject { runner.command(paths) }
+
+      it "calls the foodcritic executable" do
+        should start_with "foodcritic"
+      end
+
+      it "passes the given paths to the foodcritic executable" do
+        should end_with paths.join(" ")
+      end
+
+      it "includes the cli option" do
+        should include runner.options[:cli]
+      end
+    end
+
     describe "#run" do
       let(:runner) { described_class.new }
       let(:command) { mock "command" }
