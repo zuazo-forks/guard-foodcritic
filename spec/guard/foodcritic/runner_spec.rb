@@ -9,5 +9,27 @@ module Guard
         described_class.new(options).options.should == options
       end
     end
+
+    describe "#run" do
+      let(:runner) { described_class.new }
+      let(:command) { mock "command" }
+      before { runner.stub(:command).and_return(command) }
+
+      it "generates the command with the given paths and runs it" do
+        paths = %w(recipes/default.rb attributes/default.rb)
+        runner.should_receive(:system).with(command)
+        runner.run(paths)
+      end
+
+      it "returns true when foodcritic suceeds" do
+        runner.stub(:system).and_return(true)
+        runner.run([]).should be_true
+      end
+
+      it "returns false when foodcritic finds fault" do
+        runner.stub(:system).and_return(false)
+        runner.run([]).should be_false
+      end
+    end
   end
 end
