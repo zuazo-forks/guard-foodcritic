@@ -6,7 +6,9 @@ module Guard
       attr_reader :options
 
       def initialize(options={})
-        @options = options
+        @options = {
+          :cli => "--epic-fail any",
+        }.merge(options)
       end
 
       def run(paths)

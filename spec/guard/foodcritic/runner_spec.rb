@@ -6,7 +6,11 @@ module Guard
     describe "#options" do
       it "remembers the initialized options" do
         options = { :foo => "bar" }
-        described_class.new(options).options.should == options
+        described_class.new(options).options.should include options
+      end
+
+      it "[:cli] defaults to '--epic-fail any'" do
+        described_class.new.options[:cli].should == "--epic-fail any"
       end
     end
 

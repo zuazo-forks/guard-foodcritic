@@ -71,7 +71,7 @@ module Guard
       it "configured the runner with the guard options" do
         guard = described_class.new
         runner = guard.runner
-        runner.options.should == guard.options
+        runner.options.should include guard.options
       end
     end
 

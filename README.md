@@ -24,9 +24,12 @@ Add the guard-foodcritic definition to your Guardfile by running this command:
 ## Options
 
 ```ruby
-:all_on_start => false # Whether to run Foodcritic on all cookbooks at startup
-                       # default: true
+:all_on_start => false    # Whether to run Foodcritic on all cookbooks at startup
+                          # default: true
 
-:cookbook_paths => "." # The path(s) to your cookbooks
-                       # default: ["cookbooks"]
+:cli => "--epic-fail any" # Command line arguments passed to foodcritic
+                          # default: "--epic-fail any"
+
+:cookbook_paths => "."    # The path(s) to your cookbooks
+                          # default: ["cookbooks"]
 ```
