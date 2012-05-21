@@ -23,10 +23,12 @@ module Guard
     end
 
     def run_all
+      UI.info "Linting all cookbooks"
       run! @options[:cookbook_paths]
     end
 
     def run_on_change(paths)
+      UI.info "Linting: #{paths.join(' ')}"
       run! paths
     end
 

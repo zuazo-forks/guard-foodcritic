@@ -17,7 +17,7 @@ module Guard
 
     describe "#run_all" do
       let(:guard) { described_class.new [], :cookbook_paths => %w(cookbooks site-cookbooks) }
-      let(:runner) { mock "runner" }
+      let(:runner) { mock "runner", :run => true }
       before { guard.stub(:runner).and_return(runner) }
 
       it "runs the runner with the cookbook paths" do
@@ -34,11 +34,16 @@ module Guard
         runner.stub(:run).and_return(true)
         expect { guard.run_all }.not_to throw_symbol :task_has_failed
       end
+
+      it "informs the user" do
+        UI.should_receive(:info).with("Linting all cookbooks")
+        guard.run_all
+      end
     end
 
     describe "#run_on_change" do
       let(:guard) { described_class.new }
-      let(:runner) { mock "runner" }
+      let(:runner) { mock "runner", :run => true }
       before { guard.stub(:runner).and_return(runner) }
 
       it "runs the runner with the changed paths" do
@@ -55,6 +60,11 @@ module Guard
       it "does not throw :task_has_failed if the runner returns true" do
         runner.stub(:run).and_return(true)
         expect { guard.run_on_change([]) }.not_to throw_symbol :task_has_failed
+      end
+
+      it "informs the user" do
+        UI.should_receive(:info).with("Linting: recipes/default.rb attributes/default.rb")
+        guard.run_on_change(%w(recipes/default.rb attributes/default.rb))
       end
     end
 
