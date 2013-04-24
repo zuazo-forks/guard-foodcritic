@@ -3,7 +3,10 @@ require "guard/foodcritic"
 
 module Guard
   describe Foodcritic do
-    before { Notifier.stub(:notify) }
+    before do
+      Notifier.stub(:notify)
+      UI.stub(:info)
+    end
 
     it { should be_a_kind_of ::Guard::Guard }
 
