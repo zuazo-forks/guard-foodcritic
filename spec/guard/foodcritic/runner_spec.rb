@@ -34,7 +34,7 @@ module Guard
 
     describe "#run" do
       let(:runner) { described_class.new }
-      let(:command) { mock "command" }
+      let(:command) { double "command" }
       before { runner.stub(:command).and_return(command) }
 
       it "generates the command with the given paths and runs it" do

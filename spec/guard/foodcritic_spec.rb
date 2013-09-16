@@ -76,7 +76,7 @@ module Guard
       subject { guard.run_all }
       let(:guard) { described_class.new [], :cookbook_paths => %w(cookbooks site-cookbooks), :notification => notification }
       let(:notification) { false }
-      let(:runner) { mock "runner", :run => true }
+      let(:runner) { double "runner", :run => true }
       before { guard.stub(:runner).and_return(runner) }
 
       it "runs the runner with the cookbook paths" do
@@ -96,7 +96,7 @@ module Guard
       let(:guard) { described_class.new([], :notification => notification) }
       let(:notification) { false }
       let(:paths) { %w(recipes/default.rb attributes/default.rb) }
-      let(:runner) { mock "runner", :run => true }
+      let(:runner) { double "runner", :run => true }
       before { guard.stub(:runner).and_return(runner) }
 
       it "runs the runner with the changed paths" do
