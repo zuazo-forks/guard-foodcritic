@@ -8,7 +8,7 @@ module Guard
       UI.stub(:info)
     end
 
-    it { should be_a_kind_of ::Guard::Guard }
+    it { should be_a_kind_of ::Guard::Plugin }
 
     describe "#options" do
       it "[:all_on_start] defaults to true" do
@@ -74,7 +74,7 @@ module Guard
 
     describe "#run_all" do
       subject { guard.run_all }
-      let(:guard) { described_class.new [], :cookbook_paths => %w(cookbooks site-cookbooks), :notification => notification }
+      let(:guard) { described_class.new :cookbook_paths => %w(cookbooks site-cookbooks), :notification => notification }
       let(:notification) { false }
       let(:runner) { double "runner", :run => true }
       before { guard.stub(:runner).and_return(runner) }
@@ -93,7 +93,7 @@ module Guard
     end
 
     shared_examples "lints specified cookbook files" do
-      let(:guard) { described_class.new([], :notification => notification) }
+      let(:guard) { described_class.new(:notification => notification) }
       let(:notification) { false }
       let(:paths) { %w(recipes/default.rb attributes/default.rb) }
       let(:runner) { double "runner", :run => true }
@@ -146,13 +146,13 @@ module Guard
 
     describe "#start" do
       it "runs all on start if the :all_on_start option is set to true" do
-        guard = described_class.new([], :all_on_start => true)
+        guard = described_class.new(:all_on_start => true)
         guard.should_receive(:run_all)
         guard.start
       end
 
       it "does not run all on start if the :all_on_start option is set to false" do
-        guard = described_class.new([], :all_on_start => false)
+        guard = described_class.new(:all_on_start => false)
         guard.should_not_receive(:run_all)
         guard.start
       end
