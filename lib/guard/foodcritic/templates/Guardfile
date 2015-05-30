@@ -1,4 +1,4 @@
-guard "foodcritic" do
+guard 'foodcritic' do
   watch(%r{attributes/.+\.rb$})
   watch(%r{providers/.+\.rb$})
   watch(%r{recipes/.+\.rb$})

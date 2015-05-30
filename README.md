@@ -1,13 +1,14 @@
 # Guard::Foodcritic
 
-[![Build History][2]][1] [![Dependency Status][4]][3]
+[![Gem Version](https://badge.fury.io/rb/guard-foodcritic.png)](http://badge.fury.io/rb/guard-foodcritic)
+
+[![Build Status](https://travis-ci.org/Nordstrom/guard-foodcritic.png?branch=master)](https://travis-ci.org/Nordstrom/guard-foodcritic)
+
+[![Inline docs](http://inch-ci.org/github/nordstrom/guard-foodcritic.svg?branch=master)](http://inch-ci.org/github/nordstrom/guard-foodcritic)
+
+[![Code Climate](https://codeclimate.com/github/Nordstrom/guard-foodcritic/badges/gpa.svg)](https://codeclimate.com/github/Nordstrom/guard-foodcritic)
 
 Guard::Foodcritic automatically runs foodcritic.
-
-[1]: http://travis-ci.org/cgriego/guard-foodcritic
-[2]: https://secure.travis-ci.org/cgriego/guard-foodcritic.png?branch=master
-[3]: https://gemnasium.com/cgriego/guard-foodcritic
-[4]: https://gemnasium.com/cgriego/guard-foodcritic.png
 
 ## Installation
 
