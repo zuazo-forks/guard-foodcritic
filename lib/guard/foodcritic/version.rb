@@ -1,3 +1,3 @@
 module Guard
-  FOODCRITIC_VERSION = '1.1.0'
+  FOODCRITIC_VERSION = '1.1.1'
 end

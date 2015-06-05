@@ -1,5 +1,9 @@
 # Project History for guard-foodcritic
 
+## 1.1.1
+
+* fix 0 for 1 error, patch from github/myappleguy
+
 ## 1.1.0
 
 * merge PR from Nordstrom to make compatible with Guard 2.9 and higher (PR )
