@@ -1,5 +1,10 @@
 # Project History for guard-foodcritic
 
+## 2.0.0
+
+* depend on foodcritic ~> 5.0
+* remove support for ruby 1.9.3 (because foodcritic only works with Ruby 2.0.0+)
+
 ## 1.1.1
 
 * fix 0 for 1 error, patch from github/myappleguy
