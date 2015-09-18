@@ -12,13 +12,18 @@ Guard::Foodcritic automatically runs foodcritic.
 
 ## Installation
 
-Please be sure to have [Guard](https://github.com/guard/guard) installed before continuing.
+guard-foodcritic depends on foodcritic v5.x, which only works with Ruby
+v2.0.0 and higher.  If you are still using Ruby v1.9.3, you should use
+v1.1.1 of this gem.  The current best practice for running foodcritic
+against cookbooks is to use [ChefDK](https://downloads.chef.io/chef-dk/)
+for cookbook development, which includes Ruby 2.x.x on all platforms.
 
 Install the gem:
 
     $ gem install guard-foodcritic
 
-Add the guard-foodcritic definition to your Guardfile by running this command:
+Add the guard-foodcritic definition to your Guardfile by running this
+command:
 
     $ guard init foodcritic
 
