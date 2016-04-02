@@ -1,5 +1,10 @@
 # Project History for guard-foodcritic
 
+## 2.1.0
+* depend on foodcritic ~> 6.0
+* Move to RSpec 3.0
+* Rubocop cleanup
+
 ## 2.0.0
 
 * depend on foodcritic ~> 5.0

@@ -1,17 +1,16 @@
-require 'spec_helper'
 require 'guard/compat/test/helper'
 require 'guard/foodcritic/runner'
 
 module Guard
-  describe Foodcritic::Runner do
+  RSpec.describe Foodcritic::Runner do
     describe '#options' do
       it 'remembers the initialized options' do
-        options = { :foo => 'bar' }
-        described_class.new(options).options.should include options
+        options = { foo: 'bar' }
+        expect(described_class.new(options).options).to include options
       end
 
       it "[:cli] defaults to '--epic-fail any'" do
-        described_class.new.options[:cli].should == '--epic-fail any'
+        expect(described_class.new.options[:cli]).to eq('--epic-fail any')
       end
     end
 
@@ -21,37 +20,37 @@ module Guard
       subject { runner.command(paths) }
 
       it 'calls the foodcritic executable' do
-        should start_with 'foodcritic'
+        is_expected.to start_with 'foodcritic'
       end
 
       it 'passes the given paths to the foodcritic executable' do
-        should end_with paths.join(' ')
+        is_expected.to end_with paths.join(' ')
       end
 
       it 'includes the cli option' do
-        should include runner.options[:cli]
+        is_expected.to include runner.options[:cli]
       end
     end
 
     describe '#run' do
       let(:runner) { described_class.new }
       let(:command) { double 'command' }
-      before { runner.stub(:command).and_return(command) }
+      before { allow(runner).to receive(:command).and_return(command) }
 
       it 'generates the command with the given paths and runs it' do
         paths = %w(recipes/default.rb attributes/default.rb)
-        runner.should_receive(:system).with(command)
+        expect(runner).to receive(:system).with(command)
         runner.run(paths)
       end
 
       it 'returns true when foodcritic suceeds' do
-        runner.stub(:system).and_return(true)
-        runner.run([]).should be true
+        allow(runner).to receive(:system).and_return(true)
+        expect(runner.run([])).to be true
       end
 
       it 'returns false when foodcritic finds fault' do
-        runner.stub(:system).and_return(false)
-        runner.run([]).should be false
+        allow(runner).to receive(:system).and_return(false)
+        expect(runner.run([])).to be false
       end
     end
   end

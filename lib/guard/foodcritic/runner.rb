@@ -7,7 +7,7 @@ module Guard
 
       def initialize(options = {})
         @options = {
-          :cli => '--epic-fail any'
+          cli: '--epic-fail any'
         }.merge(options)
       end
 

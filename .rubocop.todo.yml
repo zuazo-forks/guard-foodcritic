@@ -1,6 +1,3 @@
-Style/HashSyntax:
-  Enabled: false
-
 Metrics/LineLength:
   Max: 100
 
@@ -8,4 +5,4 @@ Style/Documentation:
   Enabled: false
 
 Metrics/ModuleLength:
-  Max: 137
+  Max: 139

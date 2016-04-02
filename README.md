@@ -8,11 +8,11 @@
 
 [![Code Climate](https://codeclimate.com/github/Nordstrom/guard-foodcritic/badges/gpa.svg)](https://codeclimate.com/github/Nordstrom/guard-foodcritic)
 
-Guard::Foodcritic automatically runs foodcritic.
+Guard::Foodcritic automatically runs [foodcritic](http://www.foodcritic.io/).
 
 ## Installation
 
-guard-foodcritic depends on foodcritic v5.x, which only works with Ruby
+guard-foodcritic depends on foodcritic v6.x, which only works with Ruby
 v2.0.0 and higher.  If you are still using Ruby v1.9.3, you should use
 v1.1.1 of this gem.  The current best practice for running foodcritic
 against cookbooks is to use [ChefDK](https://downloads.chef.io/chef-dk/)
