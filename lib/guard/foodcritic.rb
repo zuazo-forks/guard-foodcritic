@@ -8,9 +8,9 @@ module Guard
       super
 
       @options = {
-        :all_on_start => true,
-        :cookbook_paths => ['cookbooks'],
-        :notification => true
+        all_on_start: true,
+        cookbook_paths: ['cookbooks'],
+        notification: true
       }.merge(@options)
     end
 
@@ -56,9 +56,9 @@ module Guard
 
     def run!(paths)
       if runner.run(paths)
-        Guard::Compat::UI.notify 'Foodcritic passed', :image => :success if @options[:notification]
+        Guard::Compat::UI.notify 'Foodcritic passed', image: :success if @options[:notification]
       else
-        Guard::Compat::UI.notify 'Foodcritic failed', :image => :failed if @options[:notification]
+        Guard::Compat::UI.notify 'Foodcritic failed', image: :failed if @options[:notification]
         throw :task_has_failed
       end
     end
